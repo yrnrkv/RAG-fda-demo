@@ -1,0 +1,45 @@
+[project]
+name = "fda-traceability-rag"
+version = "0.1.0"
+description = "A local-first hybrid RAG pipeline for FDA Food Traceability Rule guidance."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "beautifulsoup4>=4.12.0",
+    "chromadb>=0.5.0",
+    "numpy>=1.24.0",
+    "openai>=1.40.0",
+    "pypdf>=4.0.0",
+    "python-dotenv>=1.0.0",
+    "rank-bm25>=0.2.2",
+    "requests>=2.31.0",
+    "rich>=13.7.0",
+    "sentence-transformers>=3.0.0",
+    "typer>=0.12.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.5.0",
+]
+rerank = [
+    "torch>=2.2.0",
+]
+
+[project.scripts]
+fda-rag = "fda_traceability_rag.cli:app"
+
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
