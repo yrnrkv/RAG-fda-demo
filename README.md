@@ -97,3 +97,21 @@ Then manually inspect faithfulness and retrieval recall for targeted questions:
 - "What are FDA rules on drug labeling?"
 
 For a production-grade evaluation suite, add labeled expected chunks and run faithfulness, answer relevance, and context recall with a tool such as RAGAS.
+
+## Productizing this demo
+
+This pipeline can be turned into an embeddable **"Ask about FSMA 204"** web
+assistant: a visitor asks a plain-language question and gets a grounded,
+citation-backed answer drawn only from the indexed FDA guidance.
+
+Because the engine is a heavyweight Python stack (`torch` / `chromadb` /
+`sentence-transformers`), the recommended shape is a thin HTTP wrapper
+(`/ask`, `/health`, `/status`) running as a **standalone microservice** that a web
+app calls server-side — keeping LLM/index keys off the client and leaving the host
+app's serverless deploy model intact. The generation layer is provider-portable
+(verified against both OpenAI and DeepSeek via `OPENAI_BASE_URL`, no code change).
+
+A worked example targeting **FarmersFront** (a Next.js FSMA 204 landing page),
+including architecture, API contract, a phased ~9–13 eng-day plan, and risks
+(the **missing LICENSE** is the top blocker for commercial reuse), is in
+[`docs/prd-farmersfront-integration.md`](docs/prd-farmersfront-integration.md).
