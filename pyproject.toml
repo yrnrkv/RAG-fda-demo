@@ -22,6 +22,7 @@ dependencies = [
 dev = [
     "pytest>=8.0.0",
     "ruff>=0.5.0",
+    "pip-audit>=2.7.0",
 ]
 rerank = [
     "torch>=2.2.0",
@@ -41,5 +42,23 @@ where = ["src"]
 line-length = 100
 target-version = "py39"
 
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["src/fda_traceability_rag", "service"]
+omit = ["tests/*", ".venv/*", "*/__pycache__/*"]
+
+[tool.coverage.report]
+fail_under = 70
+exclude_also = [
+    "def __repr__",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
