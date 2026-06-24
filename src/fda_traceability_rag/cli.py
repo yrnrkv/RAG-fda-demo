@@ -12,7 +12,7 @@ from fda_traceability_rag.generation import AnswerGenerator
 from fda_traceability_rag.models import SourceDocument
 from fda_traceability_rag.retrieval import HybridRetriever
 from fda_traceability_rag.sources import fetch_default_sources
-from fda_traceability_rag.storage import ChunkStore, DEFAULT_EMBEDDING_MODEL, VectorStore
+from fda_traceability_rag.storage import ChunkStore, DEFAULT_EMBEDDING_MODEL, VectorStore, read_index_version
 
 
 app = typer.Typer(help="FDA Food Traceability Rule RAG pipeline.")
@@ -135,6 +135,11 @@ def status(data_dir: Path = typer.Option(Path("data"), help="Directory containin
     table.add_row("Chroma dir", _exists(data_dir / "chroma"))
     table.add_row("Raw source dir", _exists(data_dir / "raw"))
     console.print(table)
+
+    version = read_index_version(data_dir)
+    if version:
+        console.print(f"  Index version: {version.get('version', '?')} (built {version.get('built_at', '?')})")
+        console.print(f"  Chunks hash: {version.get('chunks_hash', '?')}")
 
 
 def _write_raw_documents(raw_dir: Path, documents: list[SourceDocument]) -> None:
