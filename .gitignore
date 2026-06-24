@@ -1,5 +1,9 @@
 .DS_Store
+.Spotlight-V100
+.Trashes
 .env
+.env.*
+!.env.example
 .venv/
 __pycache__/
 *.py[cod]
@@ -9,3 +13,28 @@ data/
 dist/
 build/
 *.egg-info/
+
+# Node / web widget
+node_modules/
+web/dist/
+web/dist-demo/
+web/coverage/
+*.tsbuildinfo
+.vite/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Windows
+Thumbs.db
+Desktop.ini
+*.exe
+*.dll
+
+# Claude Code local config
+.claude/settings.local.json
+.claude/plans/
